@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EmailLogin</string>
+    <string name="desc_firebase_lockup">FirebaseDescription</string>
+    <string name="google_title_text">Google</string>
+    <string name="signed_out">sign out</string>
+    <string name="sign_out">sign out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="google_status_fmt">google_status_fmt</string>
+    <string name="firebase_status_fmt">Firebase</string>
+</resources>
