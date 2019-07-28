@@ -12,11 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainPage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".AccountActivity" />
@@ -24,7 +20,13 @@
 
         </activity>
         <activity android:name=".StartingPage" />
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".PostActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".GoogleSigninActivity" />
     </application>

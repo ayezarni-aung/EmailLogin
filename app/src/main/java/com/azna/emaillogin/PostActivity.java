@@ -24,6 +24,7 @@ public class PostActivity extends AppCompatActivity {
     EditText username, email, password, confirm;
     Button signUp;
     private ApiInterface apiInterface;
+    String user_name, emailaddr, pwd, confirm_password;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,42 +37,54 @@ public class PostActivity extends AppCompatActivity {
         signUp = findViewById(R.id.sign_up);
 
         apiInterface = ApiUtil.getApi();
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(PostActivity.this, "Clicked", Toast.LENGTH_LONG).show();
-                String user_name, emailaddr, pwd, confirm_password;
                 user_name = username.getText().toString().trim();
                 emailaddr = email.getText().toString().trim();
                 pwd = password.getText().toString().trim();
                 confirm_password = confirm.getText().toString();
-                if(!TextUtils.isEmpty(user_name) && !TextUtils.isEmpty(emailaddr) && !TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(confirm_password)){
-                    Toast.makeText(PostActivity.this,"Textutil",Toast.LENGTH_LONG).show();
-                    sendPost(user_name,emailaddr,pwd,confirm_password);
+                if(emailaddr.contains("@gmail.com") && !emailaddr.startsWith("0123456789") ) {
+                    if (!TextUtils.isEmpty(user_name) && !TextUtils.isEmpty(emailaddr) && !TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(confirm_password)) {
+                        sendPost(user_name, emailaddr, pwd, confirm_password);
+                    } else
+                        Toast.makeText(PostActivity.this, " Enter All", Toast.LENGTH_LONG).show();
+
+                }else
+                {
+                    Toast.makeText(PostActivity.this,"Please Check Your Email...",Toast.LENGTH_LONG).show();
                 }
-                else
-                    Toast.makeText(PostActivity.this,"Else",Toast.LENGTH_LONG).show();
-
-
             }
         });
 
     }
 
+
+
     private void sendPost(String user_name, String emailaddr, String pwd,String confirm_password) {
-        apiInterface.savePost(user_name,emailaddr,pwd,confirm_password).enqueue(new Callback<UserResponse>() {
+        apiInterface.savePost(user_name,emailaddr,pwd,confirm_password).
+                enqueue(new Callback<UserResponse>() {
+
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                Intent intent=new Intent(PostActivity.this,LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(PostActivity.this,"Successful ..",Toast.LENGTH_LONG).show();
+
+                if (response.isSuccessful()){
+                    Toast.makeText(PostActivity.this,"Successful ..",Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(PostActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(PostActivity.this,"unsuccess ..",Toast.LENGTH_LONG).show();
+
+                }
+
 
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(PostActivity.this,"Failed .."+t.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(PostActivity.this,"Failed .."+call.toString(),Toast.LENGTH_LONG).show();
 
             }
         });

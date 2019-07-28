@@ -27,6 +27,7 @@ public class MainPage extends AppCompatActivity {
              intent = new Intent(MainPage.this, WelcomeActivity.class);
         }
         startActivity(intent);
+        finish();
 
     }
 }
